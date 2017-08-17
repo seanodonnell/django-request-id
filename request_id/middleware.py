@@ -12,7 +12,7 @@ def get_request_id(request):
     elif REQUEST_ID_HEADER:
         request_id = request.META.get(REQUEST_ID_HEADER, '')
         # if REQUEST_ID_AUTOGEN is true, generate an id if none found in header
-        if not requet_id and REQUEST_ID_AUTOGEN:
+        if not request_id and REQUEST_ID_AUTOGEN:
             request_id = generate_request_id()
         return request_id
     else:
