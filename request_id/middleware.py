@@ -3,14 +3,18 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from . import generate_request_id, local, release_local
-from .conf import REQUEST_ID_HEADER
+from .conf import REQUEST_ID_HEADER, REQUEST_ID_AUTOGEN
 
 
 def get_request_id(request):
     if hasattr(request, 'request_id'):
         return request.request_id
     elif REQUEST_ID_HEADER:
-        return request.META.get(REQUEST_ID_HEADER, '')
+        request_id = request.META.get(REQUEST_ID_HEADER, '')
+        # if REQUEST_ID_AUTOGEN is true, generate an id if none found in header
+        if not requet_id and REQUEST_ID_AUTOGEN:
+            request_id = generate_request_id()
+        return request_id
     else:
         return generate_request_id()
 
